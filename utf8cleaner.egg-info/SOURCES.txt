@@ -1,0 +1,9 @@
+MANIFEST.in
+README.md
+setup.py
+utf8cleaner/__init__.py
+utf8cleaner.egg-info/PKG-INFO
+utf8cleaner.egg-info/SOURCES.txt
+utf8cleaner.egg-info/dependency_links.txt
+utf8cleaner.egg-info/entry_points.txt
+utf8cleaner.egg-info/top_level.txt

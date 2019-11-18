@@ -1,0 +1,3 @@
+[console_scripts]
+utf8cleaner = utf8cleaner.cli:main
+
