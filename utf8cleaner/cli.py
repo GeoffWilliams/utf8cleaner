@@ -1,6 +1,6 @@
 import logging
 import argparse
-import traceback
+import utf8cleaner.cleaner
 import pkg_resources
 import sys
 
@@ -25,7 +25,7 @@ def version():
 
 def main():
     parser = argparse.ArgumentParser(description="""
-        Describe utf8cleaner here...
+        Replace non-UTF8 bytes in a file with safe alternatives
     """)
 
     parser.add_argument('--debug',
@@ -36,7 +36,9 @@ def main():
                         default=False,
                         action='store_true',
                         help='Print the sysdef version and exit')
-
+    parser.add_argument('--input',
+                        default=False,
+                        help='File to read')
     args = parser.parse_args()
     setup_logging(logging.DEBUG if args.debug else logging.INFO)
     exit_status = 1
@@ -44,6 +46,8 @@ def main():
         if args.version:
             print(version())
             exit_status = 0
+        elif args.input:
+            utf8cleaner.cleaner.clean(args.input)
         else:
             parser.print_usage()
     except Exception as e:
