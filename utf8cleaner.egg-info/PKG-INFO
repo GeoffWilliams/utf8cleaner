@@ -1,14 +1,85 @@
 Metadata-Version: 2.1
 Name: utf8cleaner
 Version: 0.0.0
-Summary: I'll add this later...
+Summary: remove non-UTF8 bytes from an input file and write a cleaned up version
 Home-page: https://github.com/GeoffWilliams/utf8cleaner.git
 Author: Geoff Williams
-Author-email: None
+Author-email: geoff@declarativesystems.com
 License: UNKNOWN
 Description: # utf8cleaner
         
-        TODO: _Replace this with something useful_
+        Read a file byte-by-byte to and strip any byte sequences that have no UTF8
+        equivalent and strip them
+        
+        ## Installation
+        ```shell
+        pip install utf8cleaner
+        ```
+        
+        Note: requires python 3
+        
+        ## Usage
+        
+        ```shell
+        utf8cleaner --input FILENAME
+        ```
+        
+        Will read `FILENAME` and write to `FILENAME.clean`
+        
+        ## Why would I want to do this?
+        Sometimes when exporting and importing data, there are byte sequences that
+        prevent data being imported. To fix this you would otherwise have to do one or
+        more of:
+        
+        * Manually edit the source data in its native application (eg backspace 
+          invisible characters) in JIRA fields
+        * Edit the file with a hex editor and look for known-bad values (eg copyright 
+          symbol)
+        * Do something smart with perl/vi/sed to find and replace known bad byte
+          patterns
+        
+        This simple utility fixes these problems in one hit.
+        
+        ## Where do these strange characters come from?
+        Number one culprit: copy and paste from outlook. This often introduces
+        invisible whitespace errors (spaces that are not spaces...) along with "pretty"
+        quotes, etc.
+        
+        Other sources including copying and pasting from files with the _old_ 
+        [ISO8859](https://en.wikipedia.org/wiki/ISO/IEC_8859) character encodings
+        
+        ## Can I see an example file that demonstrates this issue?
+        
+        [examples/test.txt](examples/test.txt)
+        
+        There is a copyright symbol at the end of the file that needs replacing
+        
+        ## What exactly is the problem?
+        iso8859 represents symbols as a single byte, eg the copyright symbol would be
+        represented by the single hex byte:
+        
+        ```hex
+        0xA9
+        ```
+        
+        [UTF8](https://en.wikipedia.org/wiki/UTF-8) uses two bytes to represent such characters, eg:
+        
+        ```hex
+        0xC2 0xA9
+        ```
+        
+        Since UTF-8 is a variable width character encoding scheme, it will use from 1 
+        to 4 bytes to encode a single symbol. This is how it is able to represent all
+        kinds of new symbols we take for granted such as 
+        [emojii](https://en.wikipedia.org/wiki/Emoji) and 
+        [CJK](https://en.wikipedia.org/wiki/CJK_characters) characters.
+        
+        ## TODO
+        * **Make sure we don't break correctly encoded sequences, eg by processing 
+          `0xC2` and `OxA9` independently**
+          * Test: `examples/good.txt` should not error - it currently does
+        * Lookup table to "fix" known trouble makers such as copyright symbol
+        
 Platform: UNKNOWN
 Classifier: Development Status :: 1 - Planning
 Classifier: Programming Language :: Python :: 3

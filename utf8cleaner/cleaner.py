@@ -20,6 +20,6 @@ def clean(filename):
                     u = str(byte_s, "utf-8")
                     fo.write(byte_s)
                 except:
-                    logging.error(f"skipped bad byte at offset {i}!")
+                    logging.error(f"skipped bad byte at offset {i}: 0x{byte_s.hex().capitalize()}")
 
             i = i + 1
