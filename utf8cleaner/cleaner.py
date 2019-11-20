@@ -17,19 +17,12 @@ def clean_context_bytes(data):
         except UnicodeDecodeError:
             cleaned += "_"
 
-#    cleaned += cleaned + " original: "
-#     try:
-#         cleaned += str(data, "utf-8")
-#     except UnicodeDecodeError:
-#         cleaned += "unavailable"
-
     cleaned = cleaned.replace("\n", "")
 
     return cleaned
 
 # https://stackoverflow.com/a/32661468/3441106
 def get_next_character(f):
-    # note: assumes valid utf-8
     c = f.read(1)
     width = 0
     max_width = 4
@@ -74,51 +67,7 @@ def clean(filename):
     with open(filename, 'rb') as fi:
         with open(output_filename, 'wb') as fo:
             while fi.tell() < file_size:
-                # try:
                 mb = get_next_character(fi)
 
                 if mb:
                     fo.write(bytearray(mb, "utf-8"))
-
-                # except UnicodeDecodeError:
-                #     # grab surrounding bytes
-                #     offset = fi.tell()
-                #     fi.seek(max(0, offset - 20))
-                #     context = fi.read(40)
-                #     context_cleaned = clean_context_bytes(context)
-                #
-                #     # back to original position
-                #     fi.seek(offset)
-                #
-                #     logging.error(f"skipped byte {offset}: 0x{byte_s.hex().capitalize()} - {context_cleaned}")
-                #
-                # byte_s = fi.read(1)
-                # if not byte_s:
-                #     # EOF
-                #     break
-                # try:
-                #     # `unicode()` function is gone from python3 and should be replaced with
-                #     # `str()` - see https://stackoverflow.com/a/38860645/3441106
-                #     u = str(byte_s, "utf-8")
-                #     fo.write(byte_s)
-                # except UnicodeDecodeError:
-                #     # not a valid utf8 *byte*
-                #     #
-                #     # This *might* (or might not!) be a multibyte character so
-                #     # read another byte and try again
-                #     u += fi.read(1)
-                #
-                #
-                #     offset = fi.tell()
-                #
-                #     # grab surrounding bytes
-                #     fi.seek(max(0, offset - 20))
-                #     context = fi.read(40)
-                #     context_cleaned = clean_context_bytes(context)
-                #
-                #     # back to original position
-                #     fi.seek(offset)
-                #
-                #     logging.error(f"skipped byte {offset}: 0x{byte_s.hex().capitalize()} - {context_cleaned}")
-                #
-                # i = i + 1
