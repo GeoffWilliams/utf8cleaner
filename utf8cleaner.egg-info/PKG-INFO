@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: utf8cleaner
-Version: 0.0.0
+Version: 0.0.1
 Summary: remove non-UTF8 bytes from an input file and write a cleaned up version
 Home-page: https://github.com/GeoffWilliams/utf8cleaner.git
 Author: Geoff Williams
