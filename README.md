@@ -65,9 +65,3 @@ to 4 bytes to encode a single symbol. This is how it is able to represent all
 kinds of new symbols we take for granted such as 
 [emojii](https://en.wikipedia.org/wiki/Emoji) and 
 [CJK](https://en.wikipedia.org/wiki/CJK_characters) characters.
-
-## TODO
-* **Make sure we don't break correctly encoded sequences, eg by processing 
-  `0xC2` and `OxA9` independently**
-  * Test: `examples/good.txt` should not error - it currently does
-* Lookup table to "fix" known trouble makers such as copyright symbol

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="utf8cleaner",
-    version="0.0.1",
+    version="0.0.2",
     author="Geoff Williams",
     author_email="geoff@declarativesystems.com",
     description="remove non-UTF8 bytes from an input file and write a cleaned up version",

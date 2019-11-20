@@ -48,6 +48,7 @@ def main():
             exit_status = 0
         elif args.input:
             utf8cleaner.cleaner.clean(args.input)
+            exit_status = 0
         else:
             parser.print_usage()
     except Exception as e:
